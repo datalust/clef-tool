@@ -1,4 +1,4 @@
-# **C**ompact **L**og **E**vent **F**ormat Tool
+# **C**ompact **L**og **E**vent **F**ormat Tool [![Build status](https://ci.appveyor.com/api/projects/status/ybr08j4h302yaw09?svg=true)](https://ci.appveyor.com/project/datalust/clef-tool) [![Download](https://img.shields.io/badge/download-releases-blue.svg)](https://github.com/datalust/clef-tool/releases)
 
 The `clef` command-line tool reads and processes the newline-delimited JSON streams produced by [_Serilog.Formatting.Compact_](https://github.com/serilog/serilog-formatting-compact) and other sources.
 
