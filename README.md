@@ -29,32 +29,38 @@ Expressions using the [_Serilog.Filters.Expressions_](https://github.com/serilog
 2017-05-09T01:23:45.96950Z [INF] Checking for updates to version 123.4
 ```
 
+### Formats
+
+Output will be plain text unless another format is specified.
+
+Write the output in CLEF format using `--format-clef`:
+
+```shell
+> clef -i log-20170509.clef --format-clef
+{"@t":"2017-05-09T01:23:45.67890Z","@mt":"Starting up"}
+...
+```
+
+Control the output text format using `--format-template`:
+
+```shell
+> clef -i log-20170509.clef --format-template="{Message}{NewLine}"
+Starting up
+...
+```
+
 ### Outputs
 
-Specify an output file with `-o`:
+Output will be written to STDOUT unless another destination is specified.
+
+Write output to a file with `-o`:
 
 ```shell
 > clef -i log-20170509.clef -o log-20170509.txt
-```
-
-Write the output itself in CLEF format using `--out-clef`:
-
-```shell
-> clef -i log-20170509.clef --out-clef
-{"@t":"2017-05-09T01:23:45.67890Z","@mt":"Starting up"}
-...
 ```
 
 Send the output to [Seq](https://getseq.net) by specifying a server URL and optional API key:
 
 ```
 > clef -i log-20170509.clef --out-seq="https://seq.example.com" --out-seq-apikey="1234567890"
-```
-
-Control the output text format using `--out-template`:
-
-```shell
-> clef -i log-20170509.clef --out-template="{Message}"
-Starting up
-...
 ```
