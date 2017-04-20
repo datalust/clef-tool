@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.8</ProductVersion>
+    <ProjectGuid>{f3a1944b-ff13-4250-a7f1-581cbb99a9bf}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>clef</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <CompilerAdditionalOptions>-arch x64</CompilerAdditionalOptions>
+    <DefineConstants>Version=$(Version)</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <CompilerAdditionalOptions>-arch x64</CompilerAdditionalOptions>
+    <LinkerAdditionalOptions>
+    </LinkerAdditionalOptions>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug;Version=$(Version)</DefineConstants>
+    <SuppressIces>
+    </SuppressIces>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DefineConstants>Version=$(Version)</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ClefTool.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RemovePdbs.xslt" />
+    <Content Include="WixUIBannerBmp.bmp" />
+    <Content Include="WixUIDialogBmp.bmp" />
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <Target Name="BeforeBuild">
+    <Exec Command="dotnet publish ..\..\src\Datalust.ClefTool\Datalust.ClefTool.csproj -c $(Configuration) -r win10-x64" />
+    <PropertyGroup>
+      <LinkerBaseInputPaths>..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish</LinkerBaseInputPaths>
+      <DefineConstants>BasePath=..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish</DefineConstants>
+    </PropertyGroup>
+    <HeatDirectory OutputFile="ClefTool.wxs" Directory="..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="ClefTool_Project" SuppressCom="true" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" Transforms="RemovePdbs.xslt" />
+  </Target>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

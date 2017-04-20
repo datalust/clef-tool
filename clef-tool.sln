@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{61556DAE-6B5F-472B-AA8F-6E36E6B1376D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{FA5BD652-A32B-4D01-B882-326F0315BD40}"
+	ProjectSection(SolutionItems) = preProject
+		asset\ClefToolLicense.rtf = asset\ClefToolLicense.rtf
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1F622339-3A47-4350-8291-AD6834E025E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{AF47E806-56BD-4431-95EC-4DF3CB26A8DA}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		Build.ps1 = Build.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "setup", "setup", "{812B5158-0B57-4157-81CD-6626C515185E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datalust.ClefTool", "src\Datalust.ClefTool\Datalust.ClefTool.csproj", "{9898F355-E8FA-4D8E-8850-443010C9E8A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datalust.ClefTool.Tests", "test\Datalust.ClefTool.Tests\Datalust.ClefTool.Tests.csproj", "{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Datalust.ClefTool.Setup", "setup\Datalust.ClefTool.Setup\Datalust.ClefTool.Setup.wixproj", "{F3A1944B-FF13-4250-A7F1-581CBB99A9BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5}.Debug|x64.Build.0 = Debug|Any CPU
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5}.Release|x64.ActiveCfg = Release|Any CPU
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5}.Release|x64.Build.0 = Release|Any CPU
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}.Debug|x64.Build.0 = Debug|Any CPU
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}.Release|x64.ActiveCfg = Release|Any CPU
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}.Release|x64.Build.0 = Release|Any CPU
+		{F3A1944B-FF13-4250-A7F1-581CBB99A9BF}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{F3A1944B-FF13-4250-A7F1-581CBB99A9BF}.Debug|x64.ActiveCfg = Debug|x64
+		{F3A1944B-FF13-4250-A7F1-581CBB99A9BF}.Debug|x64.Build.0 = Debug|x64
+		{F3A1944B-FF13-4250-A7F1-581CBB99A9BF}.Release|Any CPU.ActiveCfg = Release|x64
+		{F3A1944B-FF13-4250-A7F1-581CBB99A9BF}.Release|x64.ActiveCfg = Release|x64
+		{F3A1944B-FF13-4250-A7F1-581CBB99A9BF}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9898F355-E8FA-4D8E-8850-443010C9E8A5} = {61556DAE-6B5F-472B-AA8F-6E36E6B1376D}
+		{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A} = {1F622339-3A47-4350-8291-AD6834E025E1}
+		{F3A1944B-FF13-4250-A7F1-581CBB99A9BF} = {812B5158-0B57-4157-81CD-6626C515185E}
+	EndGlobalSection
+EndGlobal

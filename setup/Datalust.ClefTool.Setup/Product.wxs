@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?ifndef Version?>
+<?define Version = "0.0.0" ?>
+<?endif ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Product Id="*" Name="CLEF Tool" Language="1033" Version="$(var.Version).0"
+           Manufacturer="Datalust Pty Ltd" UpgradeCode="000121DF-7646-4684-C1EF-FEC86B738909">
+
+    <Package InstallerVersion="200"
+         Platform="x64"
+         Compressed="yes"
+         InstallScope="perMachine"
+         InstallPrivileges="elevated" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+
+    <WixVariable Id="WixUIDialogBmp" Value="WixUIDialogBmp.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="WixUIBannerBmp.bmp" />
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\asset\ClefToolLicense.rtf" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Icon Id="ClefTool.ico" SourceFile="..\..\src\Datalust.ClefTool\ClefTool.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="ClefTool.ico" />
+
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+    </UI>
+    
+    <Feature Id="ProductFeature" Title="CLEF Tool" Level="1">
+      <ComponentGroupRef Id="ClefTool_Project" />
+      <ComponentGroupRef Id="ClefTool_Exe" />
+    </Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFiles64Folder">
+				<Directory Id="INSTALLFOLDER" Name="CLEF Tool" />
+			</Directory>
+    </Directory>
+	</Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ClefTool_Exe">
+      <Component Id="ClefToolPathEntry" Directory="INSTALLFOLDER" Guid="C1EF6E49-C1EF-4DA5-ABD0-4A3413D79099">
+        <CreateFolder/>
+        <RemoveFile Id="InstallState" On="uninstall" Name="clef-tool.InstallState" />
+        <Environment
+          Id="PATH"
+          Name="PATH"
+          Value="[INSTALLFOLDER]"
+          Permanent="yes"
+          Part="last"
+          Action="set"
+          System="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
