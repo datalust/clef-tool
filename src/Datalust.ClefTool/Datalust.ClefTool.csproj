@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <AssemblyName>clef</AssemblyName>
+    <ApplicationIcon>ClefTool.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
