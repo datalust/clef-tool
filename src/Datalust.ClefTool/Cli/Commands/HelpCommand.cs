@@ -20,7 +20,7 @@ using Autofac.Features.Metadata;
 
 namespace Datalust.ClefTool.Cli.Commands
 {
-    [Command("help", "Show information about available commands")]
+    [Command("--help", "Show information about available commands")]
     public class HelpCommand : Command
     {
         readonly List<Meta<Lazy<Command>, CommandMetadata>> _availableCommands;
@@ -32,45 +32,25 @@ namespace Datalust.ClefTool.Cli.Commands
 
         protected override int Run(string[] unrecognised)
         {
+            // This is a little hacky; we always show the help for the (anonymous) "pipe" command.
+
             var ea = Assembly.GetEntryAssembly();
             var name = ea.GetName().Name;
 
-            if (unrecognised.Length > 0)
+            var cmd = _availableCommands.SingleOrDefault(c => c.Metadata.Name == "pipe");
+            if (cmd != null)
             {
-                var target = unrecognised[0].ToLowerInvariant();
-                var cmd = _availableCommands.SingleOrDefault(c => c.Metadata.Name == target);
-                if (cmd != null)
-                {
-                    var argHelp = cmd.Value.Value.HasArgs ? " [<args>]" : "";
-                    Console.Error.WriteLine(name + " " + cmd.Metadata.Name + argHelp);
-                    Console.Error.WriteLine();
-                    Console.Error.WriteLine(cmd.Metadata.HelpText);
-                    Console.Error.WriteLine();
+                var argHelp = cmd.Value.Value.HasArgs ? " [<args>]" : "";
+                Console.Error.WriteLine(name + argHelp);
+                Console.Error.WriteLine();
+                Console.Error.WriteLine(cmd.Metadata.HelpText);
+                Console.Error.WriteLine();
 
-                    cmd.Value.Value.PrintUsage();
-                    return 0;
-                }
-
-                base.Run(unrecognised);
+                cmd.Value.Value.PrintUsage();
+                return 0;
             }
 
-            Console.Error.WriteLine($"Usage: {name} <command> [<args>]");
-            Console.Error.WriteLine();
-            Console.Error.WriteLine("Available commands are:");
-            
-            foreach (var availableCommand in _availableCommands)
-            {
-                Printing.Define(
-                    "  " + availableCommand.Metadata.Name,
-                    availableCommand.Metadata.HelpText,
-                    13,
-                    Console.Error);
-            }
-
-            Console.Error.WriteLine();
-            Console.Error.WriteLine($"Type `{name} help <command>` for detailed help.");
-
-            return 0;
+            return base.Run(unrecognised);
         }
     }
 }

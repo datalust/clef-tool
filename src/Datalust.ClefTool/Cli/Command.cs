@@ -57,26 +57,25 @@ namespace Datalust.ClefTool.Cli
             }
         }
 
-        public int Invoke(string[] args, TextWriter cout, TextWriter cerr)
+        public int Invoke(string[] args)
         {
-            var unrecognised = Options.Parse(args).ToArray();
-
-            var errs = _features.SelectMany(f => f.Errors).ToList();
-
-            if (errs.Any())
-            {
-                ShowUsageErrors(errs);
-                return -1;
-            }
-
             try
             {
+                var unrecognised = Options.Parse(args).ToArray();
+
+                var errs = _features.SelectMany(f => f.Errors).ToList();
+
+                if (errs.Any())
+                {
+                    ShowUsageErrors(errs);
+                    return -1;
+                }
+
                 return Run(unrecognised);
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("An unhandled error occurred");
-                Console.Error.WriteLine(ex);
+                Console.Error.WriteLine(ex.Message);
                 return -1;
             }
         }

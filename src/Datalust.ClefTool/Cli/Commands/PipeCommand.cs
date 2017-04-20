@@ -12,7 +12,7 @@ using Serilog.Formatting.Display;
 
 namespace Datalust.ClefTool.Cli.Commands
 {
-    [Command("pipe", "Print the current executable version")]
+    [Command("pipe", "Process CLEF-formatted events")]
     class PipeCommand : Command
     {
         readonly EnrichFeature _enrichFeature;

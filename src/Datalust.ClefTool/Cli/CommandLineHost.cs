@@ -41,13 +41,12 @@ namespace Datalust.ClefTool.Cli
                 var cmd = _availableCommands.SingleOrDefault(c => c.Metadata.Name == norm);
                 if (cmd != null)
                 {
-                    return cmd.Value.Value.Invoke(args.Skip(1).ToArray(), cout, cerr);
+                    return cmd.Value.Value.Invoke(args.Skip(1).ToArray());
                 }
             }
 
-            cout.WriteLine($"Usage: {name} <command> [<args>]");
-            cout.WriteLine($"Type `{name} help` for available commands.");
-            return -1;
+            var pipeCommand = _availableCommands.Single(c => c.Metadata.Name == "pipe");
+            return pipeCommand.Value.Value.Invoke(args.ToArray());
         }
     }
 }
