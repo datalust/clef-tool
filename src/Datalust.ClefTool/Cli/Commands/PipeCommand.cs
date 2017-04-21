@@ -24,7 +24,7 @@ namespace Datalust.ClefTool.Cli.Commands
         readonly SeqOutputFeature _seqOutputFeature;
 
         // Include `{Properties}` once it's supported (Serilog 2.5)
-        const string DefaultOutputTemplate = "{Timestamp:o} [{Level:u3}] {Message}{NewLine}{Exception}";
+        const string DefaultOutputTemplate = "[{Timestamp:o} {Level:u3}] {Message}{NewLine}{Exception}";
 
         public PipeCommand()
         {
