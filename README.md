@@ -8,8 +8,8 @@ The default action, given a CLEF file, will be to pretty-print it in text format
 
 ```shell
 > clef -i log-20170509.clef
-2017-05-09T01:23:45.67890Z [INF] Starting up
-2017-05-09T01:23:45.96950Z [INF] Checking for updates to version 123.4
+[2017-05-09T01:23:45.67890Z INF] Starting up
+[2017-05-09T01:23:45.96950Z INF] Checking for updates to version 123.4
 ...
 ```
 
@@ -26,7 +26,7 @@ Expressions using the [_Serilog.Filters.Expressions_](https://github.com/serilog
 
 ```shell
 > clef -i log-20170509.clef --filter="Version > 100"
-2017-05-09T01:23:45.96950Z [INF] Checking for updates to version 123.4
+[2017-05-09T01:23:45.96950Z INF] Checking for updates to version 123.4
 ```
 
 ### Formats
