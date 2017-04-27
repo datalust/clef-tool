@@ -69,6 +69,8 @@ namespace Datalust.ClefTool.Cli.Commands
                         _seqOutputFeature.SeqUrl,
                         apiKey: _seqOutputFeature.SeqApiKey,
                         compact: true,
+                        batchPostingLimit: 100,
+                        eventBodyLimitBytes: 1024 * 1024,
                         controlLevelSwitch: levelSwitch);
                 }
                 else if (_jsonFormatFeature.UseJsonFormat)
