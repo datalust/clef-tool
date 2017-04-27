@@ -5,7 +5,7 @@ function Clean-Output
 
 function Restore-Packages
 {
-	& nuget restore
+	& dotnet restore
 }
 
 function Update-AssemblyInfo($version)

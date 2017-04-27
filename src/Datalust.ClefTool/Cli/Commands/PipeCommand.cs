@@ -69,6 +69,8 @@ namespace Datalust.ClefTool.Cli.Commands
                         _seqOutputFeature.SeqUrl,
                         apiKey: _seqOutputFeature.SeqApiKey,
                         compact: true,
+                        batchPostingLimit: 100,
+                        eventBodyLimitBytes: 1024 * 1024,
                         controlLevelSwitch: levelSwitch);
                 }
                 else if (_jsonFormatFeature.UseJsonFormat)
@@ -97,7 +99,9 @@ namespace Datalust.ClefTool.Cli.Commands
                 }
 
                 using (var logger = configuration.CreateLogger())
-                using (var inputFile = _fileInputFeature.InputFilename != null ? File.OpenText(_fileInputFeature.InputFilename) : null)
+                using (var inputFile = _fileInputFeature.InputFilename != null ?
+                    new StreamReader(File.Open(_fileInputFeature.InputFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) :
+                    null)
                 using (var reader = new LogEventReader(inputFile ?? Console.In))
                 {
                     while (reader.TryRead(out var evt))
