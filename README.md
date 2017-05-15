@@ -2,6 +2,14 @@
 
 The `clef` command-line tool reads and processes the newline-delimited JSON streams produced by [_Serilog.Formatting.Compact_](https://github.com/serilog/serilog-formatting-compact) and other sources.
 
+### What does CLEF look like?
+
+CLEF is a very simple, compact JSON event format with standardized fields for timestamps, messages, levels and so-on.
+
+```JSON
+{"@t":"2017-05-09T01:23:45.67890Z","@mt":"Starting up","MachineName":"web-53a889fe"}
+```
+
 ### Reading CLEF files
 
 The default action, given a CLEF file, will be to pretty-print it in text format to the console.
