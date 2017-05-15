@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{61556DAE-6B5F-472B-AA8F-6E36E6B1376D}"
 EndProject
@@ -27,6 +27,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datalust.ClefTool.Tests", "test\Datalust.ClefTool.Tests\Datalust.ClefTool.Tests.csproj", "{8603CDF1-1B8D-4762-B5CB-7BD5DA40C16A}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Datalust.ClefTool.Setup", "setup\Datalust.ClefTool.Setup\Datalust.ClefTool.Setup.wixproj", "{F3A1944B-FF13-4250-A7F1-581CBB99A9BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{0DA54CF5-F0A9-4A0B-B5F3-B3CB0902EAAE}"
+	ProjectSection(SolutionItems) = preProject
+		data\example.clef = data\example.clef
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

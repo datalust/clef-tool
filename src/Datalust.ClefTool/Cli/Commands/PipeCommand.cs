@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using Datalust.ClefTool.Cli.Features;
+using Datalust.ClefTool.Pipe;
 using Serilog;
 using Serilog.Core;
 using Serilog.Debugging;
@@ -22,6 +23,7 @@ namespace Datalust.ClefTool.Cli.Commands
         readonly FileOutputFeature _fileOutputFeature;
         readonly TemplateFormatFeature _templateFormatFeature;
         readonly SeqOutputFeature _seqOutputFeature;
+        readonly InvalidDataHandlingFeature _invalidDataHandlingFeature;
 
         // Include `{Properties}` once it's supported (Serilog 2.5)
         const string DefaultOutputTemplate = "[{Timestamp:o} {Level:u3}] {Message}{NewLine}{Exception}";
@@ -35,7 +37,7 @@ namespace Datalust.ClefTool.Cli.Commands
             _jsonFormatFeature = Enable<JsonFormatFeature>();
             _templateFormatFeature = Enable<TemplateFormatFeature>();
             _seqOutputFeature = Enable<SeqOutputFeature>();
-            
+            _invalidDataHandlingFeature = Enable<InvalidDataHandlingFeature>();
         }
 
         protected override int Run()
@@ -90,7 +92,9 @@ namespace Datalust.ClefTool.Cli.Commands
                     if (_fileOutputFeature.OutputFilename != null)
                     {
                         // This will differ slightly from the console output until `{Message:l}` becomes available
-                        configuration.AuditTo.File(new MessageTemplateTextFormatter(template, CultureInfo.InvariantCulture), _fileOutputFeature.OutputFilename);
+                        configuration.AuditTo.File(
+                            new MessageTemplateTextFormatter(template, CultureInfo.InvariantCulture),
+                            _fileOutputFeature.OutputFilename);
                     }
                     else
                     {
@@ -99,15 +103,13 @@ namespace Datalust.ClefTool.Cli.Commands
                 }
 
                 using (var logger = configuration.CreateLogger())
-                using (var inputFile = _fileInputFeature.InputFilename != null ?
-                    new StreamReader(File.Open(_fileInputFeature.InputFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) :
-                    null)
+                using (var inputFile = _fileInputFeature.InputFilename != null
+                    ? new StreamReader(File.Open(_fileInputFeature.InputFilename, FileMode.Open, FileAccess.Read,
+                        FileShare.ReadWrite))
+                    : null)
                 using (var reader = new LogEventReader(inputFile ?? Console.In))
                 {
-                    while (reader.TryRead(out var evt))
-                    {
-                        logger.Write(evt);
-                    }
+                    EventPipe.PipeEvents(reader, logger, _invalidDataHandlingFeature.InvalidDataHandling);
                 }
 
                 return failed ? 1 : 0;
