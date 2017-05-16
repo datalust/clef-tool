@@ -23,7 +23,7 @@ namespace Datalust.ClefTool.Cli.Features
 
         public override void Enable(OptionSet options)
         {
-            options.Add("invalid-data",
+            options.Add("invalid-data=",
                 "Specify how invalid data is handled: fail (default), ignore, or report",
                 v => InvalidDataHandling = (InvalidDataHandling)Enum.Parse(typeof(InvalidDataHandling), v, ignoreCase: true));
         }
