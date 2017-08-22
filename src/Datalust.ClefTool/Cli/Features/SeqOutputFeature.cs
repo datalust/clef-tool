@@ -16,8 +16,13 @@ namespace Datalust.ClefTool.Cli.Features
 {
     class SeqOutputFeature : CommandFeature
     {
+        public const int DefaultBatchPostingLimit = 100;
+        public const long DefaultEventBodyLimitBytes = 256 * 1000;
+
         public string SeqUrl { get; private set; }
         public string SeqApiKey { get; private set; }
+        public int BatchPostingLimit { get; private set; }
+        public long? EventBodyLimitBytes { get; private set; }
 
         public override void Enable(OptionSet options)
         {
@@ -28,6 +33,14 @@ namespace Datalust.ClefTool.Cli.Features
             options.Add("out-seq-apikey=",
                 "Specify the API key to use when writing to Seq, if required",
                 v => SeqApiKey = string.IsNullOrWhiteSpace(v) ? null : v.Trim());
+            
+            options.Add("out-seq-batchPostingLimit=",
+                "The maximum number of events to post in a single batch",
+                v => BatchPostingLimit = string.IsNullOrWhiteSpace(v) ? DefaultBatchPostingLimit : (int.TryParse(v.Trim(), out var postingLimit) ? postingLimit : DefaultBatchPostingLimit));
+
+            options.Add("out-seq-eventBodyLimitBytes=",
+                "The maximum size, in bytes, that the JSON representation of an event may take before it is dropped rather than being sent to the Seq server",
+                v => EventBodyLimitBytes = string.IsNullOrWhiteSpace(v) ? DefaultEventBodyLimitBytes : (long.TryParse(v.Trim(), out var bodyLimit) ? bodyLimit : DefaultEventBodyLimitBytes));   
         }
     }
 }
