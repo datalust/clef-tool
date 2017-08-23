@@ -34,11 +34,11 @@ namespace Datalust.ClefTool.Cli.Features
                 "Specify the API key to use when writing to Seq, if required",
                 v => SeqApiKey = string.IsNullOrWhiteSpace(v) ? null : v.Trim());
             
-            options.Add("out-seq-batchPostingLimit=",
+            options.Add("out-seq-batchpostinglimit=",
                 "The maximum number of events to post in a single batch",
                 v => BatchPostingLimit = string.IsNullOrWhiteSpace(v) ? DefaultBatchPostingLimit : (int.TryParse(v.Trim(), out var postingLimit) ? postingLimit : DefaultBatchPostingLimit));
 
-            options.Add("out-seq-eventBodyLimitBytes=",
+            options.Add("out-seq-eventbodylimitbytes=",
                 "The maximum size, in bytes, that the JSON representation of an event may take before it is dropped rather than being sent to the Seq server",
                 v => EventBodyLimitBytes = string.IsNullOrWhiteSpace(v) ? DefaultEventBodyLimitBytes : (long.TryParse(v.Trim(), out var bodyLimit) ? bodyLimit : DefaultEventBodyLimitBytes));   
         }
