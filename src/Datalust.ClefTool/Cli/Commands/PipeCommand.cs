@@ -11,6 +11,8 @@ using Serilog.Formatting.Compact;
 using Serilog.Formatting.Compact.Reader;
 using Serilog.Formatting.Display;
 
+// ReSharper disable UnusedType.Global
+
 namespace Datalust.ClefTool.Cli.Commands
 {
     [Command("pipe", "Process CLEF-formatted events")]
@@ -25,8 +27,7 @@ namespace Datalust.ClefTool.Cli.Commands
         readonly SeqOutputFeature _seqOutputFeature;
         readonly InvalidDataHandlingFeature _invalidDataHandlingFeature;
 
-        // Include `{Properties}` once it's supported (Serilog 2.5)
-        const string DefaultOutputTemplate = "[{Timestamp:o} {Level:u3}] {Message}{NewLine}{Exception}";
+        const string DefaultOutputTemplate = "[{Timestamp:o} {Level:u3}] {Message} {Properties}{NewLine}{Exception}";
 
         public PipeCommand()
         {
@@ -98,19 +99,17 @@ namespace Datalust.ClefTool.Cli.Commands
                     }
                     else
                     {
-                        configuration.WriteTo.LiterateConsole(outputTemplate: template);
+                        configuration.WriteTo.Console(outputTemplate: template);
                     }
                 }
 
-                using (var logger = configuration.CreateLogger())
-                using (var inputFile = _fileInputFeature.InputFilename != null
+                using var logger = configuration.CreateLogger();
+                using var inputFile = _fileInputFeature.InputFilename != null
                     ? new StreamReader(File.Open(_fileInputFeature.InputFilename, FileMode.Open, FileAccess.Read,
                         FileShare.ReadWrite))
-                    : null)
-                using (var reader = new LogEventReader(inputFile ?? Console.In))
-                {
-                    EventPipe.PipeEvents(reader, logger, _invalidDataHandlingFeature.InvalidDataHandling);
-                }
+                    : null;
+                using var reader = new LogEventReader(inputFile ?? Console.In);
+                EventPipe.PipeEvents(reader, logger, _invalidDataHandlingFeature.InvalidDataHandling);
 
                 return failed ? 1 : 0;
             }

@@ -1,26 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <PackageReference Include="serilog" Version="2.9.0" />
+    <PackageReference Include="serilog.formatting.compact.reader" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Datalust.ClefTool\Datalust.ClefTool.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Serilog">
-      <HintPath>..\..\..\..\..\Users\nblumhardt\.nuget\packages\serilog\2.4.0\lib\netstandard1.3\Serilog.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Formatting.Compact.Reader">
-      <HintPath>..\..\..\..\..\Users\nblumhardt\.nuget\packages\serilog.formatting.compact.reader\1.0.0\lib\netstandard1.0\Serilog.Formatting.Compact.Reader.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
