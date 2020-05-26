@@ -41,10 +41,10 @@ Expressions using the [_Serilog.Filters.Expressions_](https://github.com/serilog
 
 Output will be plain text unless another format is specified.
 
-Write the output in CLEF format using `--format-clef`:
+Write the output in JSON format using `--format-json`:
 
 ```
-> clef -i log-20170509.clef --format-clef
+> clef -i log-20170509.clef --format-json
 {"@t":"2017-05-09T01:23:45.67890Z","@mt":"Starting up"}
 ...
 ```
