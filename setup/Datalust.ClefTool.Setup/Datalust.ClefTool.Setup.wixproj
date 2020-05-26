@@ -47,12 +47,12 @@
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <Target Name="BeforeBuild">
-    <Exec Command="dotnet publish ..\..\src\Datalust.ClefTool\Datalust.ClefTool.csproj -c $(Configuration) -r win10-x64" />
+    <Exec Command="dotnet publish ..\..\src\Datalust.ClefTool\Datalust.ClefTool.csproj -c $(Configuration) -r win81-x64" />
     <PropertyGroup>
-      <LinkerBaseInputPaths>..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish</LinkerBaseInputPaths>
-      <DefineConstants>BasePath=..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish</DefineConstants>
+      <LinkerBaseInputPaths>..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp3.1\win81-x64\publish</LinkerBaseInputPaths>
+      <DefineConstants>BasePath=..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp3.1\win81-x64\publish</DefineConstants>
     </PropertyGroup>
-    <HeatDirectory OutputFile="ClefTool.wxs" Directory="..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="ClefTool_Project" SuppressCom="true" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" Transforms="RemovePdbs.xslt" />
+    <HeatDirectory OutputFile="ClefTool.wxs" Directory="..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp3.1\win81-x64\publish" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="ClefTool_Project" SuppressCom="true" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" Transforms="RemovePdbs.xslt" />
   </Target>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
