@@ -33,22 +33,22 @@ function Publish-Archives($version)
 		if($LASTEXITCODE -ne 0) { exit 4 }
 
 		# Make sure the archive contains a reasonable root filename
-		mv ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/publish/ ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/Datalust.ClefTool-$version-$rid/
+		mv ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/publish/ ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/
 
 		if ($rid.StartsWith("win-")) {
-			& ./build/7-zip/7za.exe a -tzip ./artifacts/Datalust.ClefTool-$version-$rid.zip ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/Datalust.ClefTool-$version-$rid/
+			& ./build/7-zip/7za.exe a -tzip ./artifacts/clef-$version-$rid.zip ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/
 			if($LASTEXITCODE -ne 0) { exit 5 }
 		} else {
-			& ./build/7-zip/7za.exe a -ttar Datalust.ClefTool-$version-$rid.tar ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/Datalust.ClefTool-$version-$rid/
+			& ./build/7-zip/7za.exe a -ttar clef-$version-$rid.tar ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/
 			if($LASTEXITCODE -ne 0) { exit 5 }
 
 			# Back to the original directory name
-			mv ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/Datalust.ClefTool-$version-$rid/ ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/publish/
+			mv ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/ ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/publish/
 			
-			& ./build/7-zip/7za.exe a -tgzip ./artifacts/Datalust.ClefTool-$version-$rid.tar.gz Datalust.ClefTool-$version-$rid.tar
+			& ./build/7-zip/7za.exe a -tgzip ./artifacts/clef-$version-$rid.tar.gz clef-$version-$rid.tar
 			if($LASTEXITCODE -ne 0) { exit 6 }
 
-			rm Datalust.ClefTool-$version-$rid.tar
+			rm clef-$version-$rid.tar
 		}
 	}
 }

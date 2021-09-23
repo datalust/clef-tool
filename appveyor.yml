@@ -5,9 +5,9 @@ build_script:
 - ps: ./Build.ps1
 test: off
 artifacts:
-- path: artifacts/clef-tool-*.zip
-- path: artifacts/clef-tool-*.tar.gz
-- path: artifacts/clef-tool.*.nupkg
+- path: artifacts/clef-*.zip
+- path: artifacts/clef-*.tar.gz
+- path: artifacts/clef.*.nupkg
 deploy:
 - provider: GitHub
   auth_token:
