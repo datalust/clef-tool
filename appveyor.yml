@@ -1,16 +1,17 @@
-version: 1.0.{build}
+version: 1.1.{build}
 skip_tags: true
 image: Visual Studio 2019
 build_script:
 - ps: ./Build.ps1
 test: off
 artifacts:
-- path: artifacts/*.msi
+- path: artifacts/clef-tool-*.zip
+- path: artifacts/clef-tool-*.tar.gz
+- path: artifacts/clef-tool.*.nupkg
 deploy:
 - provider: GitHub
   auth_token:
     secure: Bo3ypKpKFxinjR9ShkNekNvkob2iklHJU+UlYyfHtcFFIAa58SV2TkEd0xWxz633
-  artifact: /clef-.*\.msi/
   tag: v$(appveyor_build_version)
   on:
-    branch: master
+    branch: main
