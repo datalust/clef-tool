@@ -71,7 +71,6 @@ namespace Datalust.ClefTool.Cli.Commands
                     configuration.WriteTo.Seq(
                         _seqOutputFeature.SeqUrl,
                         apiKey: _seqOutputFeature.SeqApiKey,
-                        compact: true,
                         batchPostingLimit: _seqOutputFeature.BatchPostingLimit,
                         eventBodyLimitBytes: _seqOutputFeature.EventBodyLimitBytes,
                         controlLevelSwitch: levelSwitch);

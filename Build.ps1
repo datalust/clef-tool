@@ -1,3 +1,7 @@
+$ErrorActionPreference = 'Stop'
+
+$framework = 'net5.0'
+
 function Clean-Output
 {
 	if(Test-Path ./artifacts) { rm ./artifacts -Force -Recurse }
@@ -8,60 +12,56 @@ function Restore-Packages
 	& dotnet restore
 }
 
-function Update-AssemblyInfo($version)
-{  
-    $versionPattern = "[0-9]+(\.([0-9]+|\*)){3}"
-
-    foreach ($file in ls ./src/*/Properties/AssemblyInfo.cs)  
-    {     
-        (cat $file) | foreach {  
-                % {$_ -replace $versionPattern, "$version.0" }             
-            } | sc -Encoding "UTF8" $file                                 
-    }  
-}
-
-function Update-WixVersion($version)
-{
-    $defPattern = "define Version = ""0\.0\.0"""
-	$def = "define Version = ""$version"""
-    $product = ".\setup\Datalust.ClefTool.Setup\Product.wxs"
-
-    (cat $product) | foreach {  
-            % {$_ -replace $defPattern, $def }    
-        } | sc -Encoding "UTF8" $product
-}
-
-function Execute-MSBuild
-{
-	& msbuild ./clef-tool.sln /t:Rebuild /p:Configuration=Release /p:Platform=x64
-}
-
 function Execute-Tests
 {
-    pushd ./test/Datalust.ClefTool.Tests
-
-    & dotnet test -c Release
+    & dotnet test ./test/Datalust.ClefTool.Tests/Datalust.ClefTool.Tests.csproj -c Release /p:Configuration=Release /p:Platform=x64 /p:VersionPrefix=$version
     if($LASTEXITCODE -ne 0) { exit 3 }
-
-    popd
 }
 
-function Publish-Artifacts($version)
+function Create-ArtifactDir
 {
 	mkdir ./artifacts
-	mv ./setup/Datalust.ClefTool.Setup/bin/Release/clef.msi ./artifacts/clef-$version-pre.msi
+}
+
+function Publish-Archives($version)
+{
+	$rids = @("linux-x64", "linux-musl-x64", "linux-arm64", "osx-x64", "win-x64")
+	foreach ($rid in $rids) {
+	    $tfm = $framework
+	    
+		& dotnet publish ./src/Datalust.ClefTool/Datalust.ClefTool.csproj -c Release -f $tfm -r $rid /p:VersionPrefix=$version
+		if($LASTEXITCODE -ne 0) { exit 4 }
+
+		# Make sure the archive contains a reasonable root filename
+		mv ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/publish/ ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/
+
+		if ($rid.StartsWith("win-")) {
+			& ./build/7-zip/7za.exe a -tzip ./artifacts/clef-$version-$rid.zip ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/
+			if($LASTEXITCODE -ne 0) { exit 5 }
+		} else {
+			& ./build/7-zip/7za.exe a -ttar clef-$version-$rid.tar ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/
+			if($LASTEXITCODE -ne 0) { exit 5 }
+
+			# Back to the original directory name
+			mv ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/ ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/publish/
+			
+			& ./build/7-zip/7za.exe a -tgzip ./artifacts/clef-$version-$rid.tar.gz clef-$version-$rid.tar
+			if($LASTEXITCODE -ne 0) { exit 6 }
+
+			rm clef-$version-$rid.tar
+		}
+	}
 }
 
 Push-Location $PSScriptRoot
 
-$version = @{ $true = $env:APPVEYOR_BUILD_VERSION; $false = "0.0.0" }[$env:APPVEYOR_BUILD_VERSION -ne $NULL];
+$version = @{ $true = $env:APPVEYOR_BUILD_VERSION; $false = "99.99.99" }[$env:APPVEYOR_BUILD_VERSION -ne $NULL];
+Write-Output "Building version $version"
 
 Clean-Output
+Create-ArtifactDir
 Restore-Packages
-Update-AssemblyInfo($version)
-Update-WixVersion($version)
-Execute-MSBuild
+Publish-Archives($version)
 Execute-Tests
-Publish-Artifacts($version)
 
 Pop-Location
