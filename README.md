@@ -10,6 +10,22 @@ The `clef` command-line tool reads and processes the newline-delimited JSON stre
 {"@t":"2022-05-09T01:23:45.67890Z","@mt":"Starting up","MachineName":"web-53a889fe"}
 ```
 
+### Getting started
+
+[Binary releases](https://github.com/datalust/clef-tool/releases) can be downloaded directly from this project.
+
+Or, if you have `dotnet` installed, `clef` can be installed as a global tool using:
+
+```
+dotnet tool install --global Datalust.ClefTool
+```
+
+And run with:
+
+```
+dotnet clef --help
+```
+
 ### Reading CLEF files
 
 The default action, given a CLEF file, will be to pretty-print it in text format to the console.
@@ -31,7 +47,7 @@ The tool also accepts events on STDIN:
 ### Filtering
 
 Expressions using the [_Serilog.Expressions_](https://github.com/serilog/serilog-expressions) syntax can be specified to filter the stream:
-~~~~
+
 ```
 > clef -i log-20220509.clef --filter="Version > 100"
 [2022-05-09T01:23:45.96950Z INF] Checking for updates to version 123.4
@@ -80,4 +96,3 @@ Events can be enriched with additional properties by specifying them using the `
 ```
 > clef -i log-20220509.clef -p CustomerId=C123 -p Environment=Support [...]
 ```
-

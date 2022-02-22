@@ -25,12 +25,12 @@ function Create-ArtifactDir
 
 function Publish-Archives($version)
 {
-	$rids = @("linux-x64", "linux-musl-x64", "linux-arm64", "osx-x64", "win-x64")
+	$rids = @("linux-x64", "linux-musl-x64", "linux-arm64", "osx-x64", "win-x64", "osx-arm64")
 	foreach ($rid in $rids) {
 	    $tfm = $framework
 	    
-		& dotnet publish ./src/Datalust.ClefTool/Datalust.ClefTool.csproj -c Release -f $tfm -r $rid /p:VersionPrefix=$version `
-		    /p:PublishSingleFile=true /p:SelfContained=true /p:PublishReadyToRun=true
+		& dotnet publish ./src/Datalust.ClefTool/Datalust.ClefTool.csproj -c Release -f $tfm -r $rid --self-contained `
+		    /p:VersionPrefix=$version /p:PublishSingleFile=true /p:PublishReadyToRun=true
 
 		if($LASTEXITCODE -ne 0) { exit 4 }
 
@@ -40,6 +40,9 @@ function Publish-Archives($version)
 		if ($rid.StartsWith("win-")) {
 			& ./build/7-zip/7za.exe a -tzip ./artifacts/clef-$version-$rid.zip ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/
 			if($LASTEXITCODE -ne 0) { exit 5 }
+
+			# Back to the original directory name
+			mv ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/ ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/publish/			
 		} else {
 			& ./build/7-zip/7za.exe a -ttar clef-$version-$rid.tar ./src/Datalust.ClefTool/bin/Release/$tfm/$rid/clef-$version-$rid/
 			if($LASTEXITCODE -ne 0) { exit 5 }
@@ -55,6 +58,13 @@ function Publish-Archives($version)
 	}
 }
 
+function Publish-DotNetTool($version)
+{	
+	# Tool packages have to target a single non-platform-specific TFM; doing this here is cleaner than attempting it in the CSPROJ directly
+	& dotnet pack ./src/Datalust.ClefTool/Datalust.ClefTool.csproj -c Release --output ./artifacts /p:VersionPrefix=$version /p:TargetFrameworks=$framework
+    if($LASTEXITCODE -ne 0) { exit 7 }
+}
+
 Push-Location $PSScriptRoot
 
 $version = @{ $true = $env:APPVEYOR_BUILD_VERSION; $false = "99.99.99" }[$env:APPVEYOR_BUILD_VERSION -ne $NULL];
@@ -64,6 +74,7 @@ Clean-Output
 Create-ArtifactDir
 Restore-Packages
 Publish-Archives($version)
+Publish-DotNetTool($version)
 Execute-Tests
 
 Pop-Location

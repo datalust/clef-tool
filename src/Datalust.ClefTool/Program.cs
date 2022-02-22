@@ -1,16 +1,16 @@
-﻿using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using Datalust.ClefTool.Cli;
+using Datalust.ClefTool.Cli.Commands;
 
 namespace Datalust.ClefTool
 {
-    class Program
+    static class Program
     {
         public static int Main(string[] args)
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<CommandLineHost>();
-            builder.RegisterAssemblyTypes(typeof(Program).GetTypeInfo().Assembly)
+            builder.RegisterTypes(typeof(PipeCommand), typeof(HelpCommand), typeof(VersionCommand))
                 .As<Command>()
                 .WithMetadataFrom<CommandAttribute>();
 
