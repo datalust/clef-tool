@@ -68,10 +68,12 @@ Write the output in JSON format using `--format-json`:
 Control the output text format using `--format-template`:
 
 ```
-> clef -i log-20220509.clef --format-template="{Message}{NewLine}"
+> clef -i log-20220509.clef --format-template="{@m}`n"
 Starting up
 ...
 ```
+
+Escaping of embedded newlines is shell-dependent; PowerShell <code>`n</code> syntax is shown.
 
 ### Outputs
 

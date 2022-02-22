@@ -9,7 +9,8 @@ using Serilog.Debugging;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Compact.Reader;
-using Serilog.Formatting.Display;
+using Serilog.Templates;
+using Serilog.Templates.Themes;
 
 // ReSharper disable UnusedType.Global
 
@@ -27,7 +28,7 @@ namespace Datalust.ClefTool.Cli.Commands
         readonly SeqOutputFeature _seqOutputFeature;
         readonly InvalidDataHandlingFeature _invalidDataHandlingFeature;
 
-        const string DefaultOutputTemplate = "[{Timestamp:o} {Level:u3}] {Message} {Properties}{NewLine}{Exception}";
+        static readonly string DefaultOutputTemplate = "[{@t:o} {@l:u3}] {@m:lj} {rest(true)}" + Environment.NewLine + "{@x}";
 
         public PipeCommand()
         {
@@ -91,14 +92,13 @@ namespace Datalust.ClefTool.Cli.Commands
                     var template = _templateFormatFeature.OutputTemplate ?? DefaultOutputTemplate;
                     if (_fileOutputFeature.OutputFilename != null)
                     {
-                        // This will differ slightly from the console output until `{Message:l}` becomes available
-                        configuration.AuditTo.File(
-                            new MessageTemplateTextFormatter(template, CultureInfo.InvariantCulture),
-                            _fileOutputFeature.OutputFilename);
+                        var formatter = new ExpressionTemplate(template, CultureInfo.InvariantCulture);
+                        configuration.AuditTo.File(formatter, _fileOutputFeature.OutputFilename);
                     }
                     else
                     {
-                        configuration.WriteTo.Console(outputTemplate: template);
+                        var formatter = new ExpressionTemplate(template, CultureInfo.InvariantCulture, theme: TemplateTheme.Literate);
+                        configuration.WriteTo.Console(formatter);
                     }
                 }
 
