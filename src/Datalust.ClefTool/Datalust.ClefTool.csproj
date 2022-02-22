@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RuntimeIdentifiers>win-x64;linux-x64;linux-musl-x64;osx-x64</RuntimeIdentifiers>
     <GenerateAssemblyInformationalVersionAttribute>True</GenerateAssemblyInformationalVersionAttribute>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
@@ -10,16 +10,17 @@
     <Platforms>x64</Platforms>
     <AssemblyName>clef</AssemblyName>
     <ApplicationIcon>ClefTool.ico</ApplicationIcon>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="autofac" Version="6.2.0" />
+    <PackageReference Include="autofac" Version="6.3.0" />
     <PackageReference Include="serilog" Version="2.10.0" />
-    <PackageReference Include="serilog.filters.expressions" Version="2.1.0" />
+    <PackageReference Include="serilog.expressions" Version="3.3.0" />
     <PackageReference Include="serilog.formatting.compact" Version="1.1.0" />
     <PackageReference Include="serilog.formatting.compact.reader" Version="1.0.5" />
-    <PackageReference Include="serilog.sinks.console" Version="4.0.0" />
+    <PackageReference Include="serilog.sinks.console" Version="4.0.1" />
     <PackageReference Include="serilog.sinks.file" Version="5.0.0" />
-    <PackageReference Include="serilog.sinks.seq" Version="5.0.1" />
+    <PackageReference Include="serilog.sinks.seq" Version="5.1.1" />
   </ItemGroup>
 </Project>

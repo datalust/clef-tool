@@ -22,7 +22,7 @@ namespace Datalust.ClefTool.Cli.Commands
     {
         protected override int Run()
         {
-            var version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var version = Assembly.GetEntryAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
             Console.WriteLine(version);
             return 0;
         }

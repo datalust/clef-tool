@@ -16,8 +16,8 @@ namespace Datalust.ClefTool.Cli.Features
 {
     class SeqOutputFeature : CommandFeature
     {
-        public string SeqUrl { get; private set; }
-        public string SeqApiKey { get; private set; }
+        public string? SeqUrl { get; private set; }
+        public string? SeqApiKey { get; private set; }
         public int BatchPostingLimit { get; private set; } = 100;
         public long? EventBodyLimitBytes { get; private set; } = 256 * 1000;
 

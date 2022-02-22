@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 
-$framework = 'net5.0'
+$framework = 'net6.0'
 
 function Clean-Output
 {
@@ -29,7 +29,9 @@ function Publish-Archives($version)
 	foreach ($rid in $rids) {
 	    $tfm = $framework
 	    
-		& dotnet publish ./src/Datalust.ClefTool/Datalust.ClefTool.csproj -c Release -f $tfm -r $rid /p:VersionPrefix=$version
+		& dotnet publish ./src/Datalust.ClefTool/Datalust.ClefTool.csproj -c Release -f $tfm -r $rid /p:VersionPrefix=$version `
+		    /p:PublishSingleFile=true /p:SelfContained=true /p:PublishReadyToRun=true
+
 		if($LASTEXITCODE -ne 0) { exit 4 }
 
 		# Make sure the archive contains a reasonable root filename

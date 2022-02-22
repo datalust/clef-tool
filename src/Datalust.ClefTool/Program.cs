@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
 using Datalust.ClefTool.Cli;
 
@@ -15,11 +14,9 @@ namespace Datalust.ClefTool
                 .As<Command>()
                 .WithMetadataFrom<CommandAttribute>();
 
-            using (var container = builder.Build())
-            {
-                var clh = container.Resolve<CommandLineHost>();
-                return clh.Run(args, Console.Out, Console.Error);
-            }
+            using var container = builder.Build();
+            var clh = container.Resolve<CommandLineHost>();
+            return clh.Run(args);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Datalust.ClefTool.Cli.Features
 {
     class FilterFeature : CommandFeature
     {
-        public string Filter { get; set; }
+        public string? Filter { get; set; }
 
         public override void Enable(OptionSet options)
         {
