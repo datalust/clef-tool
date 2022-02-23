@@ -23,7 +23,7 @@ dotnet tool install --global Datalust.ClefTool
 And run with:
 
 ```
-dotnet clef --help
+clef --help
 ```
 
 ### Reading CLEF files
