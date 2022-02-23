@@ -18,9 +18,9 @@ namespace Datalust.ClefTool.Cli.Features
 {
     class EnrichFeature : CommandFeature
     {
-        readonly Dictionary<string, object> _properties = new Dictionary<string, object>();
+        readonly Dictionary<string, object?> _properties = new();
 
-        public Dictionary<string, object> Properties => _properties; 
+        public Dictionary<string, object?> Properties => _properties; 
          
         public override void Enable(OptionSet options)
         {

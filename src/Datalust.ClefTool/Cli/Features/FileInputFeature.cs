@@ -16,7 +16,7 @@ namespace Datalust.ClefTool.Cli.Features
 {
     class FileInputFeature : CommandFeature
     {
-        public string InputFilename { get; private set; }
+        public string? InputFilename { get; private set; }
 
         public override void Enable(OptionSet options)
         {

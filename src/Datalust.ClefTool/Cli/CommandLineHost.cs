@@ -14,9 +14,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using Autofac.Features.Metadata;
 
 namespace Datalust.ClefTool.Cli
@@ -30,11 +28,8 @@ namespace Datalust.ClefTool.Cli
             _availableCommands = availableCommands.ToList();
         }
         
-        public int Run(string[] args, TextWriter cout, TextWriter cerr)
+        public int Run(string[] args)
         {
-            var ea = Assembly.GetEntryAssembly();
-            var name = ea.GetName().Name;
-
             if (args.Length > 0)
             {
                 var norm = args[0].ToLowerInvariant();

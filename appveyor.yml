@@ -1,17 +1,24 @@
-version: 1.1.{build}
+version: 2.0.{build}
 skip_tags: true
-image: Visual Studio 2019
+image: Visual Studio 2022
 build_script:
 - ps: ./Build.ps1
 test: off
 artifacts:
 - path: artifacts/clef-*.zip
 - path: artifacts/clef-*.tar.gz
-- path: artifacts/clef.*.nupkg
+- path: artifacts/Datalust.ClefTool.*.nupkg
 deploy:
 - provider: GitHub
   auth_token:
     secure: Bo3ypKpKFxinjR9ShkNekNvkob2iklHJU+UlYyfHtcFFIAa58SV2TkEd0xWxz633
   tag: v$(appveyor_build_version)
+  on:
+    branch: main
+- provider: NuGet
+  api_key:
+    secure: qtcwO3xYGEpN9X+BQNViwuuIJfGBEExqoctZoFFkPsnCz5/mY87S55M+gCDprrno
+  skip_symbols: true
+  artifact: /Datalust.ClefTool\..*\.nupkg/
   on:
     branch: main
