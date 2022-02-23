@@ -34,7 +34,7 @@ namespace Datalust.ClefTool.Cli.Commands
         {
             // This is a little hacky; we always show the help for the (anonymous) "pipe" command.
 
-            var ea = Assembly.GetEntryAssembly();
+            var ea = Assembly.GetEntryAssembly()!;
             var name = ea.GetName().Name;
 
             var cmd = _availableCommands.SingleOrDefault(c => c.Metadata.Name == "pipe");

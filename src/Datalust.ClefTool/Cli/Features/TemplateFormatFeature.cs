@@ -16,7 +16,7 @@ namespace Datalust.ClefTool.Cli.Features
 {
     class TemplateFormatFeature : CommandFeature
     {
-        public string OutputTemplate { get; private set; }
+        public string? OutputTemplate { get; private set; }
 
         public override void Enable(OptionSet options)
         {
