@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using Datalust.ClefTool.Cli.Features;
 using Datalust.ClefTool.Pipe;
+using Datalust.ClefTool.Syntax;
 using Serilog;
 using Serilog.Core;
 using Serilog.Debugging;
@@ -92,12 +93,12 @@ namespace Datalust.ClefTool.Cli.Commands
                     var template = _templateFormatFeature.OutputTemplate ?? DefaultOutputTemplate;
                     if (_fileOutputFeature.OutputFilename != null)
                     {
-                        var formatter = new ExpressionTemplate(template, CultureInfo.InvariantCulture);
+                        var formatter = new ExpressionTemplate(template, CultureInfo.InvariantCulture, new ClefToolNameResolver());
                         configuration.AuditTo.File(formatter, _fileOutputFeature.OutputFilename);
                     }
                     else
                     {
-                        var formatter = new ExpressionTemplate(template, CultureInfo.InvariantCulture, theme: TemplateTheme.Literate);
+                        var formatter = new ExpressionTemplate(template, CultureInfo.InvariantCulture, new ClefToolNameResolver(), TemplateTheme.Literate);
                         configuration.WriteTo.Console(formatter);
                     }
                 }

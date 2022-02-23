@@ -68,12 +68,10 @@ Write the output in JSON format using `--format-json`:
 Control the output text format using `--format-template`:
 
 ```
-> clef -i log-20220509.clef --format-template="{@m}`n"
+> clef -i log-20220509.clef --format-template="{@m}{NewLine()}"
 Starting up
 ...
 ```
-
-Escaping of embedded newlines is shell-dependent; PowerShell <code>`n</code> syntax is shown.
 
 ### Outputs
 
@@ -98,3 +96,14 @@ Events can be enriched with additional properties by specifying them using the `
 ```
 > clef -i log-20220509.clef -p CustomerId=C123 -p Environment=Support [...]
 ```
+
+### Filter and template syntax
+
+The syntax supported in the `--filter` and `--format-template` arguments is documented in the
+[_Serilog.Expressions_ language reference](https://github.com/serilog/serilog-expressions#language-reference).
+
+The following functions are added:
+
+| Function    | Description                                                                             |
+|:------------|:----------------------------------------------------------------------------------------|
+| `NewLine()` | Returns a platform-dependent newline character (supported in `--format-template` only). |
