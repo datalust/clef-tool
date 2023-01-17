@@ -14,6 +14,7 @@
     <PackageId>Datalust.ClefTool</PackageId>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>clef</ToolCommandName>
+    <RollForward>Major</RollForward>
   </PropertyGroup>
 
   <ItemGroup>
