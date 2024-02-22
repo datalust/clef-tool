@@ -2,6 +2,8 @@
 
 The `clef` command-line tool reads and processes the newline-delimited JSON streams produced by [_Serilog.Formatting.Compact_](https://github.com/serilog/serilog-formatting-compact) and other sources.
 
+> ℹ️ **clef-tool** is in maintenance mode. We're focusing our efforts on the later, more complete implementation of this functionality in `seqcli`, which is also open source, and works as a standalone tool. The [`seqcli print`](https://github.com/datalust/seqcli?tab=readme-ov-file#print) and [`seqcli ingest`](https://github.com/datalust/seqcli?tab=readme-ov-file#print) commands provide the main features of `clef-tool`.
+
 ### What does CLEF look like?
 
 [CLEF](https://clef-json.org) is a very simple, compact JSON event format with standardized fields for timestamps, messages, levels and so-on.
